@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">@color/laranja</color>
+
+    <color name="laranja">#FFA730</color>
+    <color name="azul_facebook">#4267b2</color>
+    <color name="branco">#FFFFFF</color>
+    <color name="verde">#8BC34A</color>
+
+</resources>
