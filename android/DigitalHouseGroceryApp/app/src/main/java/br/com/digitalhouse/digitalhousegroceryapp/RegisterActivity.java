@@ -1,5 +1,6 @@
 package br.com.digitalhouse.digitalhousegroceryapp;
 
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
@@ -50,10 +51,15 @@ public class RegisterActivity extends AppCompatActivity {
                     .setAction("OK", new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-
+                            irParaLogin();
                         }
                     }).setActionTextColor(getResources().getColor(R.color.verde))
                     .show();
         }
+    }
+
+    private void irParaLogin(){
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
     }
 }
