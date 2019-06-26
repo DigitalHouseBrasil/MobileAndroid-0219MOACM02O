@@ -43,4 +43,5 @@
         android:text="TextView"
         app:layout_constraintStart_toEndOf="@+id/bandeira_image_view"
         app:layout_constraintTop_toBottomOf="@+id/populacao_text_view" />
+
 </android.support.constraint.ConstraintLayout>

@@ -1,6 +1,8 @@
 package br.com.digitalhouse.paisesapp.model;
 
-public class Pais {
+import java.io.Serializable;
+
+public class Pais implements Serializable {
 
     private String nome;
     private int quantidadeDeHabitantes;

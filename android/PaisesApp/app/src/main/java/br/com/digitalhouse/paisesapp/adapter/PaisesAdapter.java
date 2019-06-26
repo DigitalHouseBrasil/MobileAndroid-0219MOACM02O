@@ -8,19 +8,23 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 import br.com.digitalhouse.paisesapp.R;
+import br.com.digitalhouse.paisesapp.interfaces.PaisesListener;
 import br.com.digitalhouse.paisesapp.model.Pais;
 
 public class PaisesAdapter extends RecyclerView.Adapter<PaisesAdapter.ViewHolder> {
 
     private List<Pais> listaPaises;
+    private PaisesListener paisesListener;
 
-    public PaisesAdapter(List<Pais> listaPaises){
+    public PaisesAdapter(List<Pais> listaPaises, PaisesListener paisesListener){
         this.listaPaises = listaPaises;
+        this.paisesListener = paisesListener;
     }
-
 
     @NonNull
     @Override
@@ -31,8 +35,15 @@ public class PaisesAdapter extends RecyclerView.Adapter<PaisesAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        Pais pais = listaPaises.get(i);
+        final Pais pais = listaPaises.get(i);
         viewHolder.setupPais(pais);
+
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                paisesListener.onPaisClicado(pais);
+            }
+        });
     }
 
     @Override
@@ -60,6 +71,10 @@ public class PaisesAdapter extends RecyclerView.Adapter<PaisesAdapter.ViewHolder
             nomeTextView.setText(pais.getNome());
             populacaoTextView.setText("pop. "+pais.getQuantidadeDeHabitantes());
             idiomaTextView.setText(pais.getIdioma());
+
+            Picasso.get()
+                    .load(pais.getBandeira())
+                    .into(bandeiraImageView);
         }
 
     }
