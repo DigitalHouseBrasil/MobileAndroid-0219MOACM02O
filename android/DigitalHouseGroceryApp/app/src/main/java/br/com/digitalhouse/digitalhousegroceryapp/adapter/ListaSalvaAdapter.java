@@ -10,14 +10,17 @@ import android.widget.TextView;
 import java.util.List;
 
 import br.com.digitalhouse.digitalhousegroceryapp.R;
+import br.com.digitalhouse.digitalhousegroceryapp.interfaces.ListaComprasListener;
 import br.com.digitalhouse.digitalhousegroceryapp.model.ListaCompras;
 
 public class ListaSalvaAdapter extends RecyclerView.Adapter<ListaSalvaAdapter.ViewHolder>{
 
     private List<ListaCompras> listaComprasList;
+    private ListaComprasListener listaComprasListener;
 
-    public ListaSalvaAdapter(List<ListaCompras> listaComprasList){
+    public ListaSalvaAdapter(List<ListaCompras> listaComprasList, ListaComprasListener listaComprasListener){
         this.listaComprasList = listaComprasList;
+        this.listaComprasListener = listaComprasListener;
     }
 
     @NonNull
@@ -29,8 +32,15 @@ public class ListaSalvaAdapter extends RecyclerView.Adapter<ListaSalvaAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        ListaCompras listaCompras = listaComprasList.get(i);
+        final ListaCompras listaCompras = listaComprasList.get(i);
         viewHolder.setupListaCompras(listaCompras);
+
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listaComprasListener.onListaComprasClicado(listaCompras);
+            }
+        });
     }
 
     @Override
