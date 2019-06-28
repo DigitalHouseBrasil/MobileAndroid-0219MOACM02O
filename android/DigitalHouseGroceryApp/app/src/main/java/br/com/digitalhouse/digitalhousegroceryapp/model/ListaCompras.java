@@ -1,11 +1,13 @@
 package br.com.digitalhouse.digitalhousegroceryapp.model;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-public class ListaCompras {
+public class ListaCompras implements Serializable {
 
     private String nome;
-    private List<Produto> listaProdutos;
+    private List<Produto> listaProdutos = new ArrayList<>();
 
     public String getNome() {
         return nome;
