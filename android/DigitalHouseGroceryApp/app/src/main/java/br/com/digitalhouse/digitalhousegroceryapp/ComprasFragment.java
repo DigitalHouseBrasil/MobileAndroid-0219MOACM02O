@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.digitalhouse.digitalhousegroceryapp.adapter.ProdutoAdapter;
+import br.com.digitalhouse.digitalhousegroceryapp.model.ListaCompras;
 import br.com.digitalhouse.digitalhousegroceryapp.model.Produto;
 
 
@@ -33,6 +34,13 @@ public class ComprasFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_compras, container, false);
 
         List<Produto> listaProdutos = getListaProdutos();
+
+        Bundle bundle = getArguments();
+
+        if(bundle != null){
+            ListaCompras listaCompras = (ListaCompras) bundle.getSerializable("LISTA");
+            listaProdutos = listaCompras.getListaProdutos();
+        }
 
         ProdutoAdapter produtoAdapter = new ProdutoAdapter(listaProdutos);
 
