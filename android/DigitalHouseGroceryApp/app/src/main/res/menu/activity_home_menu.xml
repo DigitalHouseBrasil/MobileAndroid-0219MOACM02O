@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <item
+        android:id="@+id/nav_compras"
+        android:icon="@drawable/cart"
+        android:title="Compras" />
+    <item
+        android:id="@+id/nav_listas"
+        android:icon="@drawable/list"
+        android:title="Listas Salvas" />
+    <item
+        android:id="@+id/nav_promocoes"
+        android:icon="@drawable/hot"
+        android:title="Promoções" />
+
+</menu>
