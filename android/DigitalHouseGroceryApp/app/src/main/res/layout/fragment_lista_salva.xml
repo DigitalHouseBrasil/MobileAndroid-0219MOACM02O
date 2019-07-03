@@ -6,16 +6,24 @@
     android:layout_height="match_parent"
     tools:context=".ListaSalvaFragment">
 
+
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/lista_salva_recycler_view"/>
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/container_id"/>
+
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_lista_salva"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:src="@drawable/ic_plus"
         android:layout_gravity="bottom|right"/>
+
 
 </android.support.design.widget.CoordinatorLayout>
