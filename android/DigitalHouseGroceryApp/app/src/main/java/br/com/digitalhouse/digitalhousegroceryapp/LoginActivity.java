@@ -1,9 +1,11 @@
 package br.com.digitalhouse.digitalhousegroceryapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -40,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void logar(){
+    private void logar() {
 
         String emailDigitado = emailEditText.getEditableText().toString();
         String senhaDigitada = senhaEditText.getEditableText().toString();
@@ -50,15 +52,15 @@ public class LoginActivity extends AppCompatActivity {
 
 //        if(emailDigitado.equals("fabio@digitalhouse.com") && senhaDigitada.equals("123456")){
 
-            Intent intent = new Intent(this, HomeActivity.class);
+        Intent intent = new Intent(this, HomeActivity.class);
 
-            Bundle bundle = new Bundle();
+        SharedPreferences preferences = getSharedPreferences("DIGITALGROCERYAPP", Context.MODE_PRIVATE);
 
-            bundle.putString("EMAIL", emailDigitado);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("EMAIL", emailDigitado);
+        editor.commit();
 
-            intent.putExtras(bundle);
-
-            startActivity(intent);
+        startActivity(intent);
 
 //        } else {
 //            emailEditText.setError("Usuário e/ou senha incorreto(s)");
@@ -66,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
 //        }
     }
 
-    private void irParaCadastro(){
+    private void irParaCadastro() {
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
     }
