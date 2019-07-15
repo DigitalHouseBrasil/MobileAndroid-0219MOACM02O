@@ -47,17 +47,16 @@ public class HomeActivity extends AppCompatActivity
 
         SharedPreferences sharedPreferences = getSharedPreferences("DIGITALGROCERYAPP", Context.MODE_PRIVATE);
 
-        if(sharedPreferences.contains("EMAIL")){
-            String email = sharedPreferences.getString("EMAIL", "not found");
+        String email = sharedPreferences.getString("EMAIL", "not found");
 
-            View view = navigationView.getHeaderView(0);
-            TextView emailTextView = view.findViewById(R.id.menu_email_text_view);
-            emailTextView.setText(email);
-
-        }
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
+
+        View view = navigationView.getHeaderView(0);
+        TextView emailTextView = view.findViewById(R.id.menu_email_text_view);
+        emailTextView.setText(email);
+
     }
 
     @Override
