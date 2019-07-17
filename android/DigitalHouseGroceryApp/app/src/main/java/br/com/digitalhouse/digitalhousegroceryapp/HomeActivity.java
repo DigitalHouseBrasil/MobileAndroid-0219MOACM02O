@@ -19,14 +19,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import br.com.digitalhouse.digitalhousegroceryapp.interfaces.FragmentActionsListener;
-import br.com.digitalhouse.digitalhousegroceryapp.interfaces.NovaListaListener;
 import br.com.digitalhouse.digitalhousegroceryapp.util.Constantes;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         FragmentActionsListener,
-        BottomNavigationView.OnNavigationItemSelectedListener,
-        NovaListaListener {
+        BottomNavigationView.OnNavigationItemSelectedListener{
 
     private BottomNavigationView bottomNavigationView;
 
@@ -101,13 +99,4 @@ public class HomeActivity extends AppCompatActivity
         transaction.commit();
     }
 
-    @Override
-    public void criarNovaLista(String nome) {
-        FragmentManager manager = getSupportFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        transaction.remove(manager.findFragmentByTag("POPUP_NOVA_LISTA"));
-        transaction.commit();
-
-        Toast.makeText(this, "Criando lista "+nome, Toast.LENGTH_SHORT).show();
-    }
 }
