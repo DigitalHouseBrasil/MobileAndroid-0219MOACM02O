@@ -47,6 +47,14 @@ public class ListaSalvaAdapter extends RecyclerView.Adapter<ListaSalvaAdapter.Vi
                 listaComprasListener.onListaComprasClicado(listaCompras);
             }
         });
+
+        viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                listaComprasListener.deletarListaCompras(listaCompras);
+                return false;
+            }
+        });
     }
 
     @Override
