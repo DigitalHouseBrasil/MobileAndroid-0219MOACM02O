@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import br.com.digitalhouse.digitalhousegroceryapp.interfaces.FragmentActionsListener;
 import br.com.digitalhouse.digitalhousegroceryapp.interfaces.NovaListaListener;
+import br.com.digitalhouse.digitalhousegroceryapp.util.Constantes;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -45,10 +46,9 @@ public class HomeActivity extends AppCompatActivity
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        SharedPreferences sharedPreferences = getSharedPreferences("DIGITALGROCERYAPP", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(Constantes.SHARED_PREFERENCES, Context.MODE_PRIVATE);
 
-        String email = sharedPreferences.getString("EMAIL", "not found");
-
+        String email = sharedPreferences.getString(Constantes.EMAIL, "not found");
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);

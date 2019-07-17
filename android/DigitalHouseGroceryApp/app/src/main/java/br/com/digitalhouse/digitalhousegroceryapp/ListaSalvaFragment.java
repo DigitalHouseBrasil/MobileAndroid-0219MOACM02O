@@ -24,6 +24,7 @@ import br.com.digitalhouse.digitalhousegroceryapp.interfaces.ListaComprasListene
 import br.com.digitalhouse.digitalhousegroceryapp.interfaces.NovaListaListener;
 import br.com.digitalhouse.digitalhousegroceryapp.model.ListaCompras;
 import br.com.digitalhouse.digitalhousegroceryapp.model.Produto;
+import br.com.digitalhouse.digitalhousegroceryapp.util.Constantes;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -123,7 +124,7 @@ public class ListaSalvaFragment extends Fragment implements ListaComprasListener
         Fragment comprasFragment = new ComprasFragment();
 
         Bundle bundle = new Bundle();
-        bundle.putSerializable("LISTA", listaCompras);
+        bundle.putSerializable(Constantes.LISTA, listaCompras);
 
         comprasFragment.setArguments(bundle);
 

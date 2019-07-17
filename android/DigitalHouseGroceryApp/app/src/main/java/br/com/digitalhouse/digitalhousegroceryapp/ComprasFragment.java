@@ -15,6 +15,7 @@ import java.util.List;
 import br.com.digitalhouse.digitalhousegroceryapp.adapter.ProdutoAdapter;
 import br.com.digitalhouse.digitalhousegroceryapp.model.ListaCompras;
 import br.com.digitalhouse.digitalhousegroceryapp.model.Produto;
+import br.com.digitalhouse.digitalhousegroceryapp.util.Constantes;
 
 
 /**
@@ -38,7 +39,7 @@ public class ComprasFragment extends Fragment {
         Bundle bundle = getArguments();
 
         if(bundle != null){
-            ListaCompras listaCompras = (ListaCompras) bundle.getSerializable("LISTA");
+            ListaCompras listaCompras = (ListaCompras) bundle.getSerializable(Constantes.LISTA);
             listaProdutos = listaCompras.getListaProdutos();
         }
 

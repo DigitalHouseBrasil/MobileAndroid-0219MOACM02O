@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import br.com.digitalhouse.digitalhousegroceryapp.util.Constantes;
+
 public class LoginActivity extends AppCompatActivity {
 
     private TextInputEditText emailEditText;
@@ -40,6 +42,13 @@ public class LoginActivity extends AppCompatActivity {
                 irParaCadastro();
             }
         });
+
+        SharedPreferences preferences = getSharedPreferences(Constantes.SHARED_PREFERENCES, Context.MODE_PRIVATE);
+
+        if(preferences.contains(Constantes.EMAIL)){
+            emailEditText.setText(preferences.getString(Constantes.EMAIL,""));
+        }
+
     }
 
     private void logar() {
@@ -54,10 +63,10 @@ public class LoginActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, HomeActivity.class);
 
-        SharedPreferences preferences = getSharedPreferences("DIGITALGROCERYAPP", Context.MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences(Constantes.SHARED_PREFERENCES, Context.MODE_PRIVATE);
 
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("EMAIL", emailDigitado);
+        editor.putString(Constantes.EMAIL, emailDigitado);
         editor.commit();
 
         startActivity(intent);
