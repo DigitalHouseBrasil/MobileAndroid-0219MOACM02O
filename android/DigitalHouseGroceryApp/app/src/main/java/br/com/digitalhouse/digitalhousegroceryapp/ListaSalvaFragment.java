@@ -1,6 +1,7 @@
 package br.com.digitalhouse.digitalhousegroceryapp;
 
 
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -10,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import br.com.digitalhouse.digitalhousegroceryapp.adapter.ListaSalvaAdapter;
 import br.com.digitalhouse.digitalhousegroceryapp.interfaces.FragmentActionsListener;
@@ -52,6 +54,8 @@ public class ListaSalvaFragment extends Fragment implements ListaComprasListener
             }
         });
 
+        exibirListaCompras();
+
         return view;
     }
 
@@ -75,6 +79,28 @@ public class ListaSalvaFragment extends Fragment implements ListaComprasListener
     }
 
     private void exibirDialog(){
+        final Dialog dialog = new Dialog(getContext());
+        dialog.setContentView(R.layout.fragment_nova_lista_compras);
+        dialog.show();
+
+        Button okDialogButton = dialog.findViewById(R.id.nova_lista_ok_button);
+
+        okDialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gravarListaCompras();
+                exibirListaCompras();
+                dialog.dismiss();
+            }
+        });
+
+    }
+
+    private void gravarListaCompras(){
+
+    }
+
+    private void exibirListaCompras(){
 
     }
 
