@@ -40,7 +40,7 @@ public class ComprasFragment extends Fragment {
 
         if(bundle != null){
             ListaCompras listaCompras = (ListaCompras) bundle.getSerializable(Constantes.LISTA);
-            listaProdutos = listaCompras.getListaProdutos();
+            listaProdutos = new ArrayList<>();
         }
 
         ProdutoAdapter produtoAdapter = new ProdutoAdapter(listaProdutos);

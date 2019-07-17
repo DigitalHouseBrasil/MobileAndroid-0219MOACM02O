@@ -1,13 +1,21 @@
 package br.com.digitalhouse.digitalhousegroceryapp.model;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class ListaCompras implements Serializable {
 
+    @PrimaryKey(autoGenerate = true)
+    private long id;
+
+    @ColumnInfo(name = "nome")
     private String nome;
-    private List<Produto> listaProdutos = new ArrayList<>();
 
     public String getNome() {
         return nome;
@@ -17,11 +25,11 @@ public class ListaCompras implements Serializable {
         this.nome = nome;
     }
 
-    public List<Produto> getListaProdutos() {
-        return listaProdutos;
+    public long getId() {
+        return id;
     }
 
-    public void setListaProdutos(List<Produto> listaProdutos) {
-        this.listaProdutos = listaProdutos;
+    public void setId(long id) {
+        this.id = id;
     }
 }

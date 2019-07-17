@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.digitalhouse.digitalhousegroceryapp.R;
@@ -18,9 +19,14 @@ public class ListaSalvaAdapter extends RecyclerView.Adapter<ListaSalvaAdapter.Vi
     private List<ListaCompras> listaComprasList;
     private ListaComprasListener listaComprasListener;
 
-    public ListaSalvaAdapter(List<ListaCompras> listaComprasList, ListaComprasListener listaComprasListener){
-        this.listaComprasList = listaComprasList;
+    public ListaSalvaAdapter(ListaComprasListener listaComprasListener){
+        this.listaComprasList = new ArrayList<>();
         this.listaComprasListener = listaComprasListener;
+    }
+
+    public void updateList(List<ListaCompras> listaComprasList){
+        this.listaComprasList = listaComprasList;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -39,6 +45,14 @@ public class ListaSalvaAdapter extends RecyclerView.Adapter<ListaSalvaAdapter.Vi
             @Override
             public void onClick(View v) {
                 listaComprasListener.onListaComprasClicado(listaCompras);
+            }
+        });
+
+        viewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                listaComprasListener.deleteListaCompras(listaCompras);
+                return false;
             }
         });
     }

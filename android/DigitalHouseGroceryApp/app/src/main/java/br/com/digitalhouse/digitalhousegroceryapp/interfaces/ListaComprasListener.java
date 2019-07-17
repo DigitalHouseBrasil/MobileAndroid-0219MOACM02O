@@ -6,4 +6,5 @@ public interface ListaComprasListener {
 
     void onListaComprasClicado(ListaCompras listaCompras);
 
+    void deleteListaCompras(ListaCompras listaCompras);
 }
