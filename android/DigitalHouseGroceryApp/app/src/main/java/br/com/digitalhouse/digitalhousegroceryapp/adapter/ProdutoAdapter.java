@@ -6,19 +6,30 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import br.com.digitalhouse.digitalhousegroceryapp.ComprasFragment;
 import br.com.digitalhouse.digitalhousegroceryapp.R;
+import br.com.digitalhouse.digitalhousegroceryapp.interfaces.ProdutoListener;
 import br.com.digitalhouse.digitalhousegroceryapp.model.Produto;
 
 public class ProdutoAdapter extends RecyclerView.Adapter<ProdutoAdapter.ViewHolder>{
 
     private List<Produto> listaProdutos;
+    private ProdutoListener produtoListener;
 
-    public ProdutoAdapter(List<Produto> listaProdutos){
+    public ProdutoAdapter(ProdutoListener produtoListener){
+        this.produtoListener = produtoListener;
+        this.listaProdutos = new ArrayList<>();
+    }
+
+    public void atulizarLista(List<Produto> listaProdutos){
         this.listaProdutos = listaProdutos;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -60,6 +71,15 @@ public class ProdutoAdapter extends RecyclerView.Adapter<ProdutoAdapter.ViewHold
             quantidadeTextView.setText(""+produto.getQuantidade());
             unidadeTextView.setText(produto.getUnidade());
             compradoCheckBox.setChecked(produto.isComprado());
+
+            compradoCheckBox.setOnCheckedChangeListener(new CheckBox.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    produto.setComprado(isChecked);
+                    produtoListener.onProdutoSelecionado(produto);
+                }
+            });
+
         }
     }
 

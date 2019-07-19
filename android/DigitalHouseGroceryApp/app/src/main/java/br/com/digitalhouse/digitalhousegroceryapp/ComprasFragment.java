@@ -1,28 +1,38 @@
 package br.com.digitalhouse.digitalhousegroceryapp;
 
 
+import android.app.Dialog;
+import android.arch.persistence.room.Room;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import java.util.ArrayList;
-import java.util.List;
+import android.widget.Button;
 
 import br.com.digitalhouse.digitalhousegroceryapp.adapter.ProdutoAdapter;
-import br.com.digitalhouse.digitalhousegroceryapp.model.ListaCompras;
+import br.com.digitalhouse.digitalhousegroceryapp.database.AppDatabase;
+import br.com.digitalhouse.digitalhousegroceryapp.interfaces.ProdutoListener;
 import br.com.digitalhouse.digitalhousegroceryapp.model.Produto;
 import br.com.digitalhouse.digitalhousegroceryapp.util.Constantes;
+import io.reactivex.Completable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ComprasFragment extends Fragment {
+public class ComprasFragment extends Fragment implements ProdutoListener {
 
+    private ProdutoAdapter produtoAdapter;
+    private int listaComprasId;
+    private AppDatabase db;
+    private FloatingActionButton floatingActionButton;
 
     public ComprasFragment() {
         // Required empty public constructor
@@ -34,16 +44,17 @@ public class ComprasFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_compras, container, false);
 
-        List<Produto> listaProdutos = getListaProdutos();
-
         Bundle bundle = getArguments();
 
-        if(bundle != null){
-            ListaCompras listaCompras = (ListaCompras) bundle.getSerializable(Constantes.LISTA);
-            listaProdutos = new ArrayList<>();
-        }
+        produtoAdapter = new ProdutoAdapter(this);
 
-        ProdutoAdapter produtoAdapter = new ProdutoAdapter(listaProdutos);
+        db = Room.databaseBuilder(getContext(),
+                AppDatabase.class, AppDatabase.DATABASE_NAME).build();
+
+        if (bundle != null) {
+            listaComprasId = bundle.getInt(Constantes.LISTA_ID);
+            exibirListaCompras();
+        }
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(view.getContext());
 
@@ -52,41 +63,78 @@ public class ComprasFragment extends Fragment {
         recyclerView.setAdapter(produtoAdapter);
         recyclerView.setLayoutManager(layoutManager);
 
+        floatingActionButton = view.findViewById(R.id.fab_compras);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                exibirDialog();
+            }
+        });
+
         return view;
     }
 
-    private List<Produto> getListaProdutos(){
-        List<Produto> listaProdutos = new ArrayList<>();
+    private void exibirDialog() {
+        final Dialog dialog = new Dialog(getContext());
+        dialog.setContentView(R.layout.dialog_novo_produto);
+        dialog.show();
 
-        Produto produto1 = new Produto();
-        produto1.setQuantidade(2);
-        produto1.setUnidade("kg");
-        produto1.setDescricao("Cebola");
-        produto1.setComprado(false);
-        listaProdutos.add(produto1);
+        Button okDialogButton = dialog.findViewById(R.id.produto_ok_button);
 
-        Produto produto2 = new Produto();
-        produto2.setQuantidade(1);
-        produto2.setUnidade("un.");
-        produto2.setDescricao("Sabão em pó");
-        produto2.setComprado(false);
-        listaProdutos.add(produto2);
+        okDialogButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Produto produto = new Produto();
 
-        Produto produto3 = new Produto();
-        produto3.setQuantidade(5);
-        produto3.setUnidade("kg");
-        produto3.setDescricao("Arroz");
-        produto3.setComprado(false);
-        listaProdutos.add(produto3);
+                TextInputEditText nomeTextInputEditText = dialog.findViewById(R.id.descricao_produto_edit_text);
+                String descricaoDigitada = nomeTextInputEditText.getEditableText().toString();
+                produto.setDescricao(descricaoDigitada);
 
-        Produto produto4 = new Produto();
-        produto4.setQuantidade(10);
-        produto4.setUnidade("unid.");
-        produto4.setDescricao("Papel Higiênico");
-        produto4.setComprado(true);
-        listaProdutos.add(produto4);
+                TextInputEditText unidadeTextInputEditText = dialog.findViewById(R.id.unidade_produto_edit_text);
+                String unidadeDigitada = unidadeTextInputEditText.getEditableText().toString();
+                produto.setUnidade(unidadeDigitada);
 
-        return listaProdutos;
+                TextInputEditText quantidadeTextInputEditText = dialog.findViewById(R.id.quantidade_produto_edit_text);
+                String quantidadeDigitada = quantidadeTextInputEditText.getEditableText().toString();
+                produto.setQuantidade(Float.parseFloat(quantidadeDigitada));
+
+                produto.setListaComprasId(listaComprasId);
+
+                gravarProduto(produto);
+
+                dialog.dismiss();
+            }
+        });
+
     }
 
+    private void gravarProduto(Produto produto) {
+        Completable.fromAction(() -> db.produtoDao().insertAll(produto))
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(() -> exibirListaCompras());
+    }
+
+    private void exibirListaCompras() {
+        db.produtoDao()
+                .getAllByListaComprasId(listaComprasId)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(produtoList -> {
+                    produtoAdapter.atulizarLista(produtoList);
+                }, throwable -> throwable.printStackTrace());
+    }
+
+    @Override
+    public void onProdutoSelecionado(Produto produto) {
+        Completable.fromAction(() -> db.produtoDao().atualizar(produto))
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(() -> exibirListaCompras());
+    }
+
+    @Override
+    public void deletarProduto(Produto produto) {
+
+    }
 }

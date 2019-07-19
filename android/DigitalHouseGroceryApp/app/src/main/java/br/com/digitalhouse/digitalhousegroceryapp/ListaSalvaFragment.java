@@ -1,7 +1,6 @@
 package br.com.digitalhouse.digitalhousegroceryapp;
 
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.arch.persistence.room.Room;
@@ -19,7 +18,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import br.com.digitalhouse.digitalhousegroceryapp.adapter.ListaSalvaAdapter;
@@ -29,7 +27,6 @@ import br.com.digitalhouse.digitalhousegroceryapp.interfaces.ListaComprasListene
 import br.com.digitalhouse.digitalhousegroceryapp.model.ListaCompras;
 import br.com.digitalhouse.digitalhousegroceryapp.util.Constantes;
 import io.reactivex.Completable;
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -92,7 +89,7 @@ public class ListaSalvaFragment extends Fragment implements ListaComprasListener
         Fragment comprasFragment = new ComprasFragment();
 
         Bundle bundle = new Bundle();
-        bundle.putSerializable(Constantes.LISTA, listaCompras);
+        bundle.putInt(Constantes.LISTA_ID, listaCompras.getId());
 
         comprasFragment.setArguments(bundle);
 
