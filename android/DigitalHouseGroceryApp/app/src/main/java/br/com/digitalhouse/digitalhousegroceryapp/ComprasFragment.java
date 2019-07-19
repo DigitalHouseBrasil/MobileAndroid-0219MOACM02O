@@ -16,6 +16,7 @@ import android.widget.Button;
 
 import br.com.digitalhouse.digitalhousegroceryapp.adapter.ProdutoAdapter;
 import br.com.digitalhouse.digitalhousegroceryapp.database.AppDatabase;
+import br.com.digitalhouse.digitalhousegroceryapp.interfaces.ProdutoListener;
 import br.com.digitalhouse.digitalhousegroceryapp.model.Produto;
 import br.com.digitalhouse.digitalhousegroceryapp.util.Constantes;
 import io.reactivex.Completable;
@@ -26,7 +27,7 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ComprasFragment extends Fragment {
+public class ComprasFragment extends Fragment implements ProdutoListener {
 
     private FloatingActionButton fab;
     private ProdutoAdapter produtoAdapter;
@@ -52,7 +53,7 @@ public class ComprasFragment extends Fragment {
             listaComprasId = bundle.getInt(Constantes.LISTA_ID);
         }
 
-        produtoAdapter = new ProdutoAdapter();
+        produtoAdapter = new ProdutoAdapter(this);
 
         setupRecyclerView(view);
 
@@ -137,4 +138,8 @@ public class ComprasFragment extends Fragment {
                 .subscribe(() -> exibirProdutos());
     }
 
+    @Override
+    public void atualizarProdutoComprado(Produto produto) {
+        atualizarProduto(produto);
+    }
 }
