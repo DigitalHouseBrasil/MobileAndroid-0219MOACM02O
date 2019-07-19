@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.digitalhouse.digitalhousegroceryapp.R;
@@ -17,8 +18,13 @@ public class ProdutoAdapter extends RecyclerView.Adapter<ProdutoAdapter.ViewHold
 
     private List<Produto> listaProdutos;
 
-    public ProdutoAdapter(List<Produto> listaProdutos){
+    public ProdutoAdapter(){
+        this.listaProdutos = new ArrayList<>();
+    }
+
+    public void atualizarProdutos(List<Produto> listaProdutos){
         this.listaProdutos = listaProdutos;
+        notifyDataSetChanged();
     }
 
     @NonNull
