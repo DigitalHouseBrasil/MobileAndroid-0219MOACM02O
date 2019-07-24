@@ -25,6 +25,7 @@
         android:layout_height="wrap_content"
         tools:text="Texto descritivo do post"
         android:id="@+id/post_descricao_text_view_id"
+        android:layout_margin="8dp"
         />
 
 </LinearLayout>
