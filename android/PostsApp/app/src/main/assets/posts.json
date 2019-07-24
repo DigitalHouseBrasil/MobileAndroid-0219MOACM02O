@@ -1,0 +1,37 @@
+[
+  {
+    "titulo": "Mais mulheres na programação",
+    "descricao": "Você sabia que, de acordo com dados da ONU, somente 17% das pessoas trabalhando com programação no Brasil hoje são mulheres? Para aquelas que tentam ingressar em áreas de tecnologia, o sentimento geral é de que esses campos de atuação ainda são dominados por homens.",
+    "autor": "Jose da Silva",
+    "data": "2018/10/09 15:20:00",
+    "urlImagem": "https://br.digitalhouse.com/wp-content/uploads/2019/05/banner-becas-mujeres-dh.png"
+  },
+  {
+    "titulo": "O que preciso saber para desenvolver um aplicativo",
+    "descricao": "Você consegue passar um dia de sua vida hoje sem abrir um aplicativo sequer no seu celular? Viramos quase reféns de apps, eles nos ajudam a organizar nossos compromissos, nos ajudam a manter foco na dieta ou na academia, nos conectam com amigos e até nos lembram de beber água.",
+    "autor": "Jose da Silva",
+    "data": "2018/10/09 15:20:00",
+    "urlImagem": "https://static.makeuseof.com/wp-content/uploads/2017/04/MUO-Pay-What-You-Want-The-Ultimate-Android-Development-Bundle09-670x335.jpg"
+  },
+  {
+    "titulo": "Cardápio do Gran Coffee Atualizado",
+    "descricao": "No espaço de co-working existe um café com diversas opções.",
+    "autor": "João Ribeiro",
+    "data": "2018/10/08 10:20:00",
+    "urlImagem": "https://www.digitalhouse.com/wp-content/uploads/2016/11/campus_img7.jpg"
+  },
+  {
+    "titulo": "O poder da nova educação",
+    "descricao": "Tudo está acelerado. As mudanças vêm em ondas, os conceitos sobrepõem-se e é difícil definir o que é temporário, modismo, do que é efetivamente novo e duradouro.",
+    "autor": "Maria Souza",
+    "data": "2018/10/01 09:00:00",
+    "urlImagem": "https://d26519lbsgqyxd.cloudfront.net/dashboard/wp-content/uploads/2018/09/04105831/-1522934034.jpg"
+  },
+  {
+    "titulo": "Digital Summit aconteceu!",
+    "descricao": "O digital summit reuniu diversos palestrantes na Digital House",
+    "author": "Jose da Silva",
+    "data": "2018/10/09 22:00:00",
+    "urlImagem": "https://www.digitalhouse.com/wp-content/uploads/2017/11/digital-su-643697.png"
+  }
+]

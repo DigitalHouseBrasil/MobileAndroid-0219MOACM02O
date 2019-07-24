@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.example.fabiotadashi.postsapp.R;
 import com.example.fabiotadashi.postsapp.model.Post;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +58,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         }
 
         public void bind(Post post) {
+            Picasso.get().load(post.getUrlImagem()).into(postImageView);
             tituloTextView.setText(post.getTitulo());
             descricaoTextView.setText(post.getDescricao());
         }
