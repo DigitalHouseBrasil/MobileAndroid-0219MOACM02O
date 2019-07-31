@@ -2,13 +2,13 @@ package br.com.digitalhouse.digitalhousegroceryapp;
 
 
 import android.app.Dialog;
-import android.arch.persistence.room.Room;
+import androidx.room.Room;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TextInputEditText;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputEditText;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +17,7 @@ import android.widget.Button;
 import br.com.digitalhouse.digitalhousegroceryapp.adapter.ProdutoAdapter;
 import br.com.digitalhouse.digitalhousegroceryapp.database.AppDatabase;
 import br.com.digitalhouse.digitalhousegroceryapp.interfaces.ProdutoListener;
-import br.com.digitalhouse.digitalhousegroceryapp.model.Produto;
+import br.com.digitalhouse.digitalhousegroceryapp.database.model.Produto;
 import br.com.digitalhouse.digitalhousegroceryapp.util.Constantes;
 import io.reactivex.Completable;
 import io.reactivex.android.schedulers.AndroidSchedulers;

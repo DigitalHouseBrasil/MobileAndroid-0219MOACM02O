@@ -1,30 +1,33 @@
-package br.com.digitalhouse.digitalhousegroceryapp;
+package br.com.digitalhouse.digitalhousegroceryapp.modules.lista.view;
 
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.arch.persistence.room.Room;
+
+import androidx.lifecycle.ViewModelProviders;
+import androidx.room.Room;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TextInputEditText;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputEditText;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 
-import java.util.concurrent.TimeUnit;
-
+import br.com.digitalhouse.digitalhousegroceryapp.ComprasFragment;
+import br.com.digitalhouse.digitalhousegroceryapp.R;
 import br.com.digitalhouse.digitalhousegroceryapp.adapter.ListaSalvaAdapter;
 import br.com.digitalhouse.digitalhousegroceryapp.database.AppDatabase;
 import br.com.digitalhouse.digitalhousegroceryapp.interfaces.FragmentActionsListener;
 import br.com.digitalhouse.digitalhousegroceryapp.interfaces.ListaComprasListener;
-import br.com.digitalhouse.digitalhousegroceryapp.model.ListaCompras;
+import br.com.digitalhouse.digitalhousegroceryapp.database.model.ListaCompras;
+import br.com.digitalhouse.digitalhousegroceryapp.modules.lista.viewmodel.ListaComprasViewModel;
 import br.com.digitalhouse.digitalhousegroceryapp.util.Constantes;
 import io.reactivex.Completable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -41,6 +44,7 @@ public class ListaSalvaFragment extends Fragment implements ListaComprasListener
     private AppDatabase db;
     private ListaSalvaAdapter listaSalvaAdapter;
     private ProgressBar progressBar;
+    private ListaComprasViewModel listaComprasViewModel;
 
     public ListaSalvaFragment() {
         // Required empty public constructor
@@ -72,7 +76,14 @@ public class ListaSalvaFragment extends Fragment implements ListaComprasListener
             }
         });
 
-        exibirListaCompras();
+        listaComprasViewModel = ViewModelProviders.of(this).get(ListaComprasViewModel.class);
+
+        listaComprasViewModel.atualizarLista();
+
+        listaComprasViewModel.getListaComprasLiveData()
+                .observe(this, listaCompras -> {
+                    listaSalvaAdapter.atualizarLista(listaCompras);
+                });
 
         return view;
     }
@@ -109,7 +120,6 @@ public class ListaSalvaFragment extends Fragment implements ListaComprasListener
                         .subscribeOn(Schedulers.newThread())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe();
-                exibirListaCompras();
                 dialog.dismiss();
             }
         });
@@ -150,24 +160,8 @@ public class ListaSalvaFragment extends Fragment implements ListaComprasListener
     }
 
     private void gravarListaCompras(ListaCompras listaCompras){
-        Completable.fromAction(() -> db.listaComprasDao().insertAll(listaCompras))
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(() -> exibirListaCompras());
+        listaComprasViewModel.inserirListaCompras(listaCompras);
     }
 
-    private void exibirListaCompras(){
-        progressBar.setVisibility(View.VISIBLE);
-        db.listaComprasDao()
-                .getAll()
-                .delaySubscription(1, TimeUnit.SECONDS)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(listaComprasList -> {
-                    listaSalvaAdapter.atualizarLista(listaComprasList);
-                    progressBar.setVisibility(View.GONE);
-                }, throwable -> throwable.printStackTrace());
-
-    }
 
 }

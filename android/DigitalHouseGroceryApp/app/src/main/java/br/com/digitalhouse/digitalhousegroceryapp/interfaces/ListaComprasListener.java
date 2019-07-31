@@ -1,6 +1,6 @@
 package br.com.digitalhouse.digitalhousegroceryapp.interfaces;
 
-import br.com.digitalhouse.digitalhousegroceryapp.model.ListaCompras;
+import br.com.digitalhouse.digitalhousegroceryapp.database.model.ListaCompras;
 
 public interface ListaComprasListener {
 

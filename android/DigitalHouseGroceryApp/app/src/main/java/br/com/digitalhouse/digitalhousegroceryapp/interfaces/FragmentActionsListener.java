@@ -1,6 +1,6 @@
 package br.com.digitalhouse.digitalhousegroceryapp.interfaces;
 
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 
 public interface FragmentActionsListener {
 
