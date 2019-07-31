@@ -1,5 +1,6 @@
 package br.com.digitalhouse.gamesapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,6 +13,9 @@ import br.com.digitalhouse.gamesapp.viewmodel.GameViewModel;
 import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
+
+    public static final int LIMIT = 20;
+    private int offset;
 
     private RecyclerView gameRecyclerView;
     private GamesAdapter gamesAdapter;
@@ -31,19 +35,36 @@ public class MainActivity extends AppCompatActivity {
 
         GameViewModel gameViewModel = ViewModelProviders.of(this).get(GameViewModel.class);
 
-        gameViewModel.atualizarGames();
+        gameViewModel.atualizarGames(LIMIT, offset);
 
         gameViewModel.getGameLiveData()
                 .observe(this, gameList -> {
-                    gamesAdapter.atualizarGames(gameList);
+                    gamesAdapter.adicionarGames(gameList);
                     swipeRefreshLayout.setRefreshing(false);
                 });
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                gameViewModel.atualizarGames();
+                gameViewModel.atualizarGames(LIMIT, offset);
             }
+        });
+
+        gameRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+                if(gameRecyclerView.canScrollVertically(1)){
+
+                    offset += LIMIT;
+
+                    gameViewModel.atualizarGames(LIMIT, offset);
+
+                }
+
+            }
+
         });
     }
 }

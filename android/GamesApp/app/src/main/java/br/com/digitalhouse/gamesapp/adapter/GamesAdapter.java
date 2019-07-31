@@ -22,6 +22,11 @@ public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.ViewHolder> 
         notifyDataSetChanged();
     }
 
+    public void adicionarGames(List<Game> gameList){
+        this.gameList.addAll(gameList);
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

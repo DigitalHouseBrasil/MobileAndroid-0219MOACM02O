@@ -9,7 +9,6 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 import br.com.digitalhouse.gamesapp.model.Game;
 import br.com.digitalhouse.gamesapp.repository.GameRepository;
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
@@ -29,12 +28,13 @@ public class GameViewModel extends AndroidViewModel {
         return gameLiveData;
     }
 
-    public void atualizarGames(){
+    public void atualizarGames(int limit, int offset){
         disposable.add(
-                gameRepository.getGameListApi()
+                gameRepository.getGameListApi(limit, offset)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeOn(Schedulers.newThread())
-                    .subscribe(gameList -> gameLiveData.setValue(gameList))
+                    .subscribe(gameList -> gameLiveData.setValue(gameList),
+                            throwable -> throwable.printStackTrace())
         );
     }
 }
