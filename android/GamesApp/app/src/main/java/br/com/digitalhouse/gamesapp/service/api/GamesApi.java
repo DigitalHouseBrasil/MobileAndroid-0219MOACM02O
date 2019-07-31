@@ -1,5 +1,6 @@
 package br.com.digitalhouse.gamesapp.service.api;
 
+import br.com.digitalhouse.gamesapp.model.Game;
 import br.com.digitalhouse.gamesapp.model.GameResponse;
 import io.reactivex.Observable;
 import retrofit2.http.GET;

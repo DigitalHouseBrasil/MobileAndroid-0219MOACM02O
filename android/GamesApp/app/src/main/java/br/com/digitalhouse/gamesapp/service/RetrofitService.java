@@ -1,5 +1,7 @@
 package br.com.digitalhouse.gamesapp.service;
 
+import com.facebook.stetho.okhttp3.StethoInterceptor;
+
 import java.util.concurrent.TimeUnit;
 
 import br.com.digitalhouse.gamesapp.service.api.GamesApi;
@@ -19,6 +21,7 @@ public class RetrofitService {
             clientBuilder.connectTimeout(30, TimeUnit.SECONDS);
             clientBuilder.readTimeout(30, TimeUnit.SECONDS);
             clientBuilder.writeTimeout(30, TimeUnit.SECONDS);
+            clientBuilder.addNetworkInterceptor(new StethoInterceptor());
 
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
