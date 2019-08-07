@@ -20,7 +20,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 
-import br.com.digitalhouse.digitalhousegroceryapp.ComprasFragment;
+import br.com.digitalhouse.digitalhousegroceryapp.modules.produtos.view.ComprasFragment;
 import br.com.digitalhouse.digitalhousegroceryapp.R;
 import br.com.digitalhouse.digitalhousegroceryapp.adapter.ListaSalvaAdapter;
 import br.com.digitalhouse.digitalhousegroceryapp.database.AppDatabase;

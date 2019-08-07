@@ -1,10 +1,13 @@
-package br.com.digitalhouse.digitalhousegroceryapp;
+package br.com.digitalhouse.digitalhousegroceryapp.modules.produtos.view;
 
 
 import android.app.Dialog;
+
+import androidx.lifecycle.ViewModelProviders;
 import androidx.room.Room;
 import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,11 +16,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
+import br.com.digitalhouse.digitalhousegroceryapp.R;
 import br.com.digitalhouse.digitalhousegroceryapp.adapter.ProdutoAdapter;
 import br.com.digitalhouse.digitalhousegroceryapp.database.AppDatabase;
 import br.com.digitalhouse.digitalhousegroceryapp.interfaces.ProdutoListener;
 import br.com.digitalhouse.digitalhousegroceryapp.database.model.Produto;
+import br.com.digitalhouse.digitalhousegroceryapp.modules.produtos.viewmodel.ComprasViewModel;
 import br.com.digitalhouse.digitalhousegroceryapp.util.Constantes;
 import io.reactivex.Completable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -33,6 +39,7 @@ public class ComprasFragment extends Fragment implements ProdutoListener {
     private ProdutoAdapter produtoAdapter;
     private int listaComprasId;
     private AppDatabase db;
+    private ComprasViewModel comprasViewModel;
 
     public ComprasFragment() {
         // Required empty public constructor
@@ -64,7 +71,21 @@ public class ComprasFragment extends Fragment implements ProdutoListener {
             }
         });
 
-        exibirProdutos();
+
+        comprasViewModel = ViewModelProviders.of(this).get(ComprasViewModel.class);
+
+        comprasViewModel.atualizarProdutos(listaComprasId);
+
+        comprasViewModel.getListaProdutoLiveData()
+                .observe(this, listaProdutos -> {
+                    produtoAdapter.atualizarProdutos(listaProdutos);
+                });
+
+        comprasViewModel.getProdutoAtualizadoLiveData()
+                .observe(this, produto -> {
+                    Snackbar.make(fab, "Produto "+produto.getDescricao()+" Atualizado", Snackbar.LENGTH_LONG).show();
+                    comprasViewModel.atualizarProdutos(listaComprasId);
+                });
 
         return view;
     }
@@ -96,7 +117,7 @@ public class ComprasFragment extends Fragment implements ProdutoListener {
 
                 produto.setListaComprasId(listaComprasId);
 
-                gravarProduto(produto);
+                comprasViewModel.gravarProduto(produto);
 
                 dialog.dismiss();
             }
@@ -114,32 +135,9 @@ public class ComprasFragment extends Fragment implements ProdutoListener {
         recyclerView.setLayoutManager(layoutManager);
     }
 
-    private void exibirProdutos(){
-        db.produtoDao()
-                .getListaProdutosByListaCompras(listaComprasId)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.newThread())
-                .subscribe(listaProdutos -> produtoAdapter.atualizarProdutos(listaProdutos),
-                        throwable -> throwable.printStackTrace());
-    }
-
-    private void gravarProduto(Produto produto){
-        Completable.fromAction(() -> db.produtoDao().inserir(produto))
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.newThread())
-                .subscribe(() -> exibirProdutos());
-    }
-
-
-    private void atualizarProduto(Produto produto){
-        Completable.fromAction(() -> db.produtoDao().update(produto))
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.newThread())
-                .subscribe(() -> exibirProdutos());
-    }
 
     @Override
     public void atualizarProdutoComprado(Produto produto) {
-        atualizarProduto(produto);
+        comprasViewModel.atualizarProduto(produto);
     }
 }

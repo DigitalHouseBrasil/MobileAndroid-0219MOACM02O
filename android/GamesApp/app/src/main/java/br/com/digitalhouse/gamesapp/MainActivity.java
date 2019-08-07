@@ -8,11 +8,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import br.com.digitalhouse.gamesapp.adapter.GamesAdapter;
+import br.com.digitalhouse.gamesapp.adapter.listener.GameListListener;
+import br.com.digitalhouse.gamesapp.model.Game;
 import br.com.digitalhouse.gamesapp.viewmodel.GameViewModel;
 
+import android.content.Intent;
 import android.os.Bundle;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements GameListListener {
 
     public static final int LIMIT = 20;
     private int offset;
@@ -28,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
         swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout_id);
         gameRecyclerView = findViewById(R.id.games_reycler_view_id);
-        gamesAdapter = new GamesAdapter();
+        gamesAdapter = new GamesAdapter(this);
 
         gameRecyclerView.setAdapter(gamesAdapter);
         gameRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -67,4 +70,19 @@ public class MainActivity extends AppCompatActivity {
 
         });
     }
+
+    @Override
+    public void onGameClick(Game game) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+
+        intent.setType("text/plain");
+
+        intent.putExtra(Intent.EXTRA_SUBJECT, game.getTitulo());
+
+        intent.putExtra(Intent.EXTRA_TEXT, game.getTitulo() + ": "+game.getDescricao());
+
+        startActivity(Intent.createChooser(intent,  "Compatilhar"));
+
+    }
+
 }

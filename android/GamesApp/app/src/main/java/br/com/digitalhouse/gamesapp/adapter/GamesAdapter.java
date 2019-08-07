@@ -11,11 +11,17 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import br.com.digitalhouse.gamesapp.R;
+import br.com.digitalhouse.gamesapp.adapter.listener.GameListListener;
 import br.com.digitalhouse.gamesapp.model.Game;
 
 public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.ViewHolder> {
 
     private List<Game> gameList = new ArrayList<>();
+    private GameListListener gameListListener;
+
+    public GamesAdapter(GameListListener gameListListener){
+        this.gameListListener = gameListListener;
+    }
 
     public void atualizarGames(List<Game> gameList){
         this.gameList = gameList;
@@ -38,6 +44,13 @@ public class GamesAdapter extends RecyclerView.Adapter<GamesAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Game game = gameList.get(position);
         holder.bind(game);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gameListListener.onGameClick(game);
+            }
+        });
     }
 
     @Override
