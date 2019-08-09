@@ -20,6 +20,7 @@ import android.widget.TextView;
 import br.com.digitalhouse.digitalhousegroceryapp.interfaces.FragmentActionsListener;
 import br.com.digitalhouse.digitalhousegroceryapp.modules.produtos.view.ComprasFragment;
 import br.com.digitalhouse.digitalhousegroceryapp.modules.lista.view.ListaSalvaFragment;
+import br.com.digitalhouse.digitalhousegroceryapp.modules.promocao.view.PromocaoFragment;
 import br.com.digitalhouse.digitalhousegroceryapp.util.Constantes;
 
 public class HomeActivity extends AppCompatActivity

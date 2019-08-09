@@ -21,6 +21,11 @@ public class PromocaoAdapter extends RecyclerView.Adapter<PromocaoAdapter.ViewHo
 
     private List<Promocao> promocaoList = new ArrayList<>();
 
+    public void atualizarPromocoes(List<Promocao> promocaoList){
+        this.promocaoList = promocaoList;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
