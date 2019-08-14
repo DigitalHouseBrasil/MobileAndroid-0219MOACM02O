@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".CadastroActivity"></activity>
         <activity android:name=".MainActivity" />
-        <activity android:name=".LoginActivity">
+        <activity android:name=".modules.login.view.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

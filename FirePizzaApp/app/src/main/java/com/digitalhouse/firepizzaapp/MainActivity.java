@@ -64,17 +64,8 @@ public class MainActivity extends AppCompatActivity {
 
         StorageReference reference = storage.getReference("perfil/"+user.getUid());
 
-        reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Picasso.get().load(uri).into(perfilImageView);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                Toast.makeText(MainActivity.this, "Erro ao baixar foto", Toast.LENGTH_SHORT).show();
-            }
-        });
+        reference.getDownloadUrl().addOnSuccessListener(uri -> Picasso.get().load(uri).into(perfilImageView))
+                .addOnFailureListener(exception -> Toast.makeText(MainActivity.this, "Erro ao baixar foto", Toast.LENGTH_SHORT).show());
     }
 
     private void tirarFoto() {
@@ -99,17 +90,8 @@ public class MainActivity extends AppCompatActivity {
             byte[] data = baos.toByteArray();
 
             UploadTask uploadTask = reference.putBytes(data);
-            uploadTask.addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    Toast.makeText(MainActivity.this, "Upload falhou", Toast.LENGTH_SHORT).show();
-                }
-            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Toast.makeText(MainActivity.this, "Upload concluído", Toast.LENGTH_SHORT).show();
-                }
-            });
+            uploadTask.addOnFailureListener(exception -> Toast.makeText(MainActivity.this, "Upload falhou", Toast.LENGTH_SHORT).show())
+                    .addOnSuccessListener(taskSnapshot -> Toast.makeText(MainActivity.this, "Upload concluído", Toast.LENGTH_SHORT).show());
 
         }
     }
