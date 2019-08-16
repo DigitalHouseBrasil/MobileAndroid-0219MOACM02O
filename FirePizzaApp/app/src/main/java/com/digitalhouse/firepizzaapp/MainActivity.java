@@ -1,21 +1,21 @@
 package com.digitalhouse.firepizzaapp;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.digitalhouse.firepizzaapp.adapter.PizzaAdapter;
+import com.digitalhouse.firepizzaapp.model.Pizza;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
@@ -24,6 +24,7 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,6 +32,10 @@ public class MainActivity extends AppCompatActivity {
     private ImageView perfilImageView;
     private FirebaseStorage storage = FirebaseStorage.getInstance();
     private FirebaseUser user;
+    private PizzaAdapter pizzaAdapter;
+    private RecyclerView pizzaRecyclerView;
+    private Button mussarelaButton;
+    private Button calabresaButton;
 
     private static final int REQUEST_IMAGE_CAPTURE = 1;
 
@@ -41,11 +46,14 @@ public class MainActivity extends AppCompatActivity {
 
         saudacaoTextView = findViewById(R.id.saudacao_text_view_id);
         perfilImageView = findViewById(R.id.perfil_image_view_id);
+        pizzaRecyclerView = findViewById(R.id.pizza_recycler_view_id);
+        mussarelaButton = findViewById(R.id.mussarela_button_id);
+        calabresaButton = findViewById(R.id.calabresa_button_id);
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             String name = user.getDisplayName();
-            saudacaoTextView.setText("Bem vindo "+name);
+            saudacaoTextView.setText("Bem vindo " + name);
         }
 
         perfilImageView.setOnClickListener(new View.OnClickListener() {
@@ -55,14 +63,34 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
         baixarFoto();
+
+        pizzaAdapter = new PizzaAdapter();
+        pizzaRecyclerView.setAdapter(pizzaAdapter);
+        pizzaRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        mussarelaButton.setOnClickListener( view -> {
+            pedirPizza("Mussarela", 5.0F);
+        });
+
+        calabresaButton.setOnClickListener(view -> {
+            pedirPizza("Calabresa", 6.0F);
+        });
+
+    }
+
+    private void pedirPizza(String descricao, float preco) {
+        Pizza pizza = new Pizza();
+        pizza.setDescricao(descricao);
+        pizza.setPreco(preco);
+        pizza.setEntregue(false);
+        pizza.setData(new Date());
 
     }
 
     private void baixarFoto() {
 
-        StorageReference reference = storage.getReference("perfil/"+user.getUid());
+        StorageReference reference = storage.getReference("perfil/" + user.getUid());
 
         reference.getDownloadUrl().addOnSuccessListener(uri -> Picasso.get().load(uri).into(perfilImageView))
                 .addOnFailureListener(exception -> Toast.makeText(MainActivity.this, "Erro ao baixar foto", Toast.LENGTH_SHORT).show());
@@ -82,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             perfilImageView.setImageBitmap(imageBitmap);
 
-            StorageReference reference = storage.getReference("perfil/"+user.getUid());
+            StorageReference reference = storage.getReference("perfil/" + user.getUid());
 
             // Get the data from an ImageView as bytes
             ByteArrayOutputStream baos = new ByteArrayOutputStream();

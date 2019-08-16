@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/descricao_text_view_id"
+        android:layout_weight="1"
+        android:layout_marginLeft="8dp"
+        tools:text="Mussarela"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/preco_text_view_id"
+        android:layout_marginRight="16dp"
+        tools:text="R$5.00"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/entregue_text_view_id"
+        android:layout_marginRight="8dp"
+        tools:text="entregue"/>
+
+</LinearLayout>

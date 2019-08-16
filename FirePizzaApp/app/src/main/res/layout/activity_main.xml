@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/perfil_image_view_id"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
@@ -27,4 +27,35 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/perfil_image_view_id" />
+
+    <Button
+        android:id="@+id/mussarela_button_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="Mussarela"
+        app:layout_constraintEnd_toStartOf="@+id/saudacao_text_view_id"
+        app:layout_constraintTop_toBottomOf="@+id/saudacao_text_view_id" />
+
+    <Button
+        android:id="@+id/calabresa_button_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Calabresa"
+        app:layout_constraintStart_toEndOf="@+id/saudacao_text_view_id"
+        app:layout_constraintTop_toBottomOf="@+id/saudacao_text_view_id" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/pizza_recycler_view_id"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mussarela_button_id" />
 </androidx.constraintlayout.widget.ConstraintLayout>
