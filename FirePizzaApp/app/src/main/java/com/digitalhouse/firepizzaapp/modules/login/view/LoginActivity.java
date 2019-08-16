@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
 
         loginViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
 
-        loginViewModel.getAutenticadoLiveData()
+            loginViewModel.getAutenticadoLiveData()
                 .observe(this, autenticado -> {
                     if (autenticado) {
                         irParaMain();
