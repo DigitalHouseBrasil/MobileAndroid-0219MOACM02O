@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.digitalhouse.firepizzaapp.R;
@@ -59,6 +60,13 @@ public class PizzaAdapter extends RecyclerView.Adapter<PizzaAdapter.ViewHolder> 
             descricaoTextView.setText(pizza.getDescricao());
             precoTextView.setText("R$"+pizza.getPreco());
             entregueTextView.setText(pizza.isEntregue() ? "entregue" : "aguarde");
+            if(pizza.isEntregue()){
+                entregueTextView.setText("entregue");
+                entregueTextView.setTextColor(ContextCompat.getColor(entregueTextView.getContext(), R.color.verde));
+            } else {
+                entregueTextView.setText("aguarde");
+                entregueTextView.setTextColor(ContextCompat.getColor(entregueTextView.getContext(), R.color.vermelho));
+            }
         }
     }
 }
