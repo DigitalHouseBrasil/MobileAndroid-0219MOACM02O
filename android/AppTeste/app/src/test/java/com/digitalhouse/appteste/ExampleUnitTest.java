@@ -2,7 +2,7 @@ package com.digitalhouse.appteste;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static junit.framework.TestCase.assertEquals;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -12,6 +12,15 @@ import static org.junit.Assert.*;
 public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() {
-        assertEquals(4, 2 + 3);
+        assertEquals(4, 2 + 2);
     }
+
+    @Test
+    public void testeInversaoPalavra(){
+        MainActivity mainActivity = new MainActivity();
+
+        String palavraInvertida= mainActivity.inverterPalavra("fabio");
+        assertEquals("oibaf", palavraInvertida);
+    }
+
 }

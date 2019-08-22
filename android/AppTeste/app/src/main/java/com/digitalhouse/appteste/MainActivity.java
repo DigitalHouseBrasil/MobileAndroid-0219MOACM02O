@@ -24,5 +24,19 @@ public class MainActivity extends AppCompatActivity {
         okButton = findViewById(R.id.ok_button_id);
         resultadoTextView = findViewById(R.id.resultado_text_view_id);
 
+        okButton.setOnClickListener(view -> {
+
+            float peso = Float.parseFloat(pesoEditText.getEditableText().toString());
+            float altura = Float.parseFloat(alturaEditText.getEditableText().toString());
+
+
+            resultadoTextView.setText("O resultado é :");
+        });
+
     }
+
+    public String inverterPalavra(String palavra){
+        return "";
+    }
+
 }
